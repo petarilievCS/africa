@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct MapView: View {
+    @State private var region = K.africa
+    private var locations: [Location] = Bundle.main.decode(K.locations)
+    
     var body: some View {
-        Text("Map")
+        Map(coordinateRegion: $region, annotationItems: locations) { location in
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
+                Image("logo").resizable().scaledToFit().frame(width: 32)
+            }
+        }
     }
 }
 
